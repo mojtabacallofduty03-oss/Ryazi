@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمایشگاه ریاضی نهم | جشنواره خوارزمی</title>
+    <!-- لینک به فایل CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- آیکون‌ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- لودینگ -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <h3>در حال بارگذاری کلاس هوشمند ♡♡♡</h3>
+    </div>
+
+    <!-- پس‌زمینه -->
+    <canvas id="math-grid-canvas"></canvas>
+
+    <!-- هدر -->
+    <header>
+        <div class="nav-container">
+            <div class="logo"><i class="fas fa-cube"></i> ریاضی نهم</div>
+            <ul class="nav-links">
+                <li><a href="#home">خانه</a></li>
+                <li><a href="#learn">آموزش</a></li>
+                <li><a href="#simulator">ماشین محاسبات</a></li>
+                <li><a href="#game">بازی</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        </div>
+    </header>
+
+    <!-- منوی موبایل -->
+    <div class="overlay-bg" id="overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-menu-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        <ul>
+            <li><a href="#home" onclick="toggleMenu()">خانه</a></li>
+            <li><a href="#learn" onclick="toggleMenu()">آموزش</a></li>
+            <li><a href="#simulator" onclick="toggleMenu()">ماشین محاسبات</a></li>
+            <li><a href="#game" onclick="toggleMenu()">بازی</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <!-- بخش اصلی (Hero) -->
+        <section id="home" class="hero">
+            <h1>دنیای منطق و مجموعه‌ها</h1>
+            <p>ابزارهای تعاملی پیشرفته برای یادگیری بهتر ریاضیات پایه نهم</p>
+        </section>
+
+        <!-- آموزش -->
+        <section id="learn" class="container">
+            <h2 class="section-title">مفاهیم پایه</h2>
+            <div class="grid-cards">
+                <div class="card">
+                    <i class="fas fa-infinity"></i>
+                    <h3>مفهوم مجموعه</h3>
+                    <p>مجموعه دسته‌ای از اشیاء مشخص است که با یک ویژگی مشترک شناسایی می‌شوند. اعضای مجموعه با {} نشان داده می‌شوند.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-cogs"></i>
+                    <h3>عملگرها</h3>
+                    <p>عملگرهای اصلی مجموعه شامل اجتماع (همه اعضا)، اشتراک (اعضای مشترک) و تفاضل (اعضای موجود در اولی و دومی) است.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-sort-amount-down"></i>
+                    <h3>زیرمجموعه</h3>
+                    <p>اگر تمام اعضای مجموعه B در مجموعه A وجود داشته باشند، B زیرمجموعه A نامیده می‌شود (B ⊂ A).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ماشین محاسبات -->
+        <section id="simulator" class="container">
+            <h2 class="section-title">ماشین محاسبات مجموعه</h2>
+            <p class="sim-desc">دو مجموعه را وارد کنید و عملیات ریاضی را ببینید (اعداد را با ویرگول جدا کنید)</p>
+            
+            <div class="set-machine">
+                <div class="input-group">
+                    <div class="set-input-wrapper">
+                        <label>مجموعه A</label>
+                        <input type="text" id="inputA" class="set-input" placeholder="مثال: 1, 2, 3, 4">
+                    </div>
+                    <div class="set-input-wrapper">
+                        <label>مجموعه B</label>
+                        <input type="text" id="inputB" class="set-input" placeholder="مثال: 3, 4, 5, 6">
+                    </div>
+                </div>
+
+                <div class="controls-ops">
+                    <button class="btn-op" onclick="calcSet('union')">اجتماع (∪)</button>
+                    <button class="btn-op" onclick="calcSet('intersection')">اشتراک (∩)</button>
+                    <button class="btn-op" onclick="calcSet('diff')">تفاضل (A - B)</button>
+                    <button class="btn-op" onclick="fillExample()" style="border-color: #fff;"><i class="fas fa-magic"></i> پر کردن نمونه</button>
+                </div>
+
+                <div class="result-display" id="resultBox">
+                    <span>نتیجه اینجا نمایش داده می‌شود...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- بازی -->
+        <section id="game" class="container">
+            <div class="game-box">
+                <div class="game-info">
+                    <span>امتیاز: <span id="score">0</span></span>
+                    <span>زمان: <span id="timer">60</span></span>
+                </div>
+                
+                <div class="question-area" id="qArea">
+                    شروع...
+                </div>
+
+                <div class="controls">
+                    <button class="btn-game btn-true" onclick="gameAnswer(true)">عضو است</button>
+                    <button class="btn-game btn-false" onclick="gameAnswer(false)">عضو نیست</button>
+                </div>
+
+                <div class="game-overlay" id="gameOverlay">
+                    <h2>بازی تمام شد!</h2>
+                    <p>امتیاز: <span id="finalScore">0</span></p>
+                    <button class="btn-game btn-true" onclick="initGame()">شروع مجدد</button>
+                </div>
+            </div>
+            <p class="game-rules">قانون: عدد باید یا زوج باشد یا مضرب 5 (اجتماع)</p>
+        </section>
+    </main>
+
+    <button class="theme-btn" onclick="toggleTheme()"><i class="fas fa-adjust"></i></button>
+
+    <footer>
+        <p>طراحی شده برای جشنواره خوارزمی | دی ماه ۱۴۰۴ </p>
+    </footer>
+
+    <!-- لینک به فایل JS -->
+    <script src="script.js"></script>
+</body>
+</html>
